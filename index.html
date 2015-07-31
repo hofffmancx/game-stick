@@ -1,0 +1,177 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta content="IE=10.000" http-equiv="X-UA-Compatible">
+    <meta name="Keywords" content="">     
+    <meta name="description" content="">     
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"> 
+    <title>撑杆过河，全世界只有3人可以过40关</title>
+    <link href="style.css" rel="stylesheet" type="text/css">     
+    <script type="text/javascript" src="jquery.js"></script>
+    <script type="text/javascript" src="public.js"></script>
+</head>
+<body style="">
+    <img src="img/ico.jpg" width="0" height="0" style="position:absolute">
+    <div class="point">0</div>
+    <div class="point">0</div>
+    <div class="tips">用手按住屏幕,使杆子变成适合长度后放开<br>据世界上能过40关只有3人<br>如果无法正常游戏，请点击右上角“原网页”即可进入原版游戏</div>
+    <div id="main">
+        <div class="wall"></div>
+        <div class="wall new" style="left: 50%;"></div>
+        <div class="stick" style="-webkit-transform-origin: 0px 0px; -webkit-transform: rotate(-90deg);"></div>
+        <div class="stickMan"><img width="5%" src="img/stick_stand.png"></div>
+    </div>
+    <!-- 游戏结束弹层--> 
+    <div class="gameOver">
+        <h2>游戏结束!</h2>
+        <div class="showPoint">
+            <p>分数</p>
+            <p class="newPoint">0</p>
+            <p>最佳</p>
+            <p class="bestPoint">0</p>
+        </div>
+        <div style=" margin-left:10%">
+            <div class="btn again">再玩一次</div>
+            <div class="btn share">分享</div>
+            <div class="btn again"><a href="http://game.hzsbz.com/goguanzhu.html" style="text-decoration:none;">关注我们</a></div>
+            <div class="btn again"><a href="/" style=" text-decoration:none;">更多游戏</a></div>
+        </div>
+    </div>
+    <div id="mask"><img src="img/share.png"></div>
+    <div class="reloadImg" style="display: none;"><img src="img/stick.gif"></div>
+    <script type="text/javascript">
+        var longStick;
+        var shortStick;
+        var screenWidth = document.documentElement.clientWidth;
+        var point = 0;
+        var speed = "5%";
+        function touchSatrtFunc(evt) {
+            if(point>=2){
+                $(".tips").hide();
+            }
+            evt.preventDefault();
+            document.addEventListener('touchend', touchEndFunc, false);
+            initStick();
+            getLong();
+            document.removeEventListener('touchstart', touchSatrtFunc, false);
+        }
+        function getLong() {
+            if(point>5){
+                speed="5%"; 
+            }
+            longStick = setInterval(function() {
+                var stickWidth = getWidthNumber($('.stick').css('width'));
+                if(stickWidth<=screenWidth){
+                    $('.stick').css({width:'+='+speed});
+                }else{
+                    clearInterval(longStick);
+                    getShort();
+                }
+            },30);
+        }
+        function getShort() {
+            if(point>5){
+                speed="10%";  
+            }
+            shortStick = setInterval(function() {
+                var stickWidth = getWidthNumber($('.stick').css('width'));
+                if(stickWidth>0){
+                    $('.stick').css({width:'-='+speed});
+                }else{
+                    clearInterval(shortStick);
+                    getLong();
+                }
+            },30);
+        }
+        function getWidthNumber(ele){
+            if (ele) {
+                var WidthNumber = ele.substr(0,ele.length-2);
+                WidthNumber = Number(WidthNumber);
+                return WidthNumber;
+            }
+        }
+        function touchEndFunc(evt) {
+            clearBind();
+            evt.preventDefault();
+            clearInterval(longStick);
+            clearInterval(shortStick);
+            setTimeout(function(){
+                $('.stick').css('transition','.6s');
+                $('.stick').css('transform','rotate(0deg)');
+                setTimeout('checkStickLong.check()',600);
+            },200);
+        }
+        function touchMoveFunc(evt){
+            evt.preventDefault();
+        }
+        function initStick() {
+            $(".stick").css({'transition':'0','transform':'rotate(-90deg)','width':'0','left':'20%'});
+        }
+              
+        function init(){
+            $(".stick").css({'transform-origin':'0 0','transform':'rotate(-90deg)'});
+            addBind();
+            document.addEventListener('touchmove', touchMoveFunc, false);
+            $(".again").click(function(){
+                $(".gameOver").css('display','none');
+                addBind();
+                $(".point,.tips").css('display','block');
+                point = 0;
+                speed="5%";
+                $(".point").html(point);
+                $(".wall").eq(0).css({'left':'0','width':'20%'});
+                $(".new").css({'left':'50%','width':'20%'});
+                $(".stick").css('transition','0')
+                $(".stick").css('width','0');
+                $(".stickMan").css({'left':'15.5%','bottom':'66.5%'});
+                $("body").css('background-position-x', '0');
+                $(".stickMan img").attr({'src':'img/stick_stand.png'});
+                $(".shouji").css({"left":"0%"});
+            });
+            $(".share").click(function(){
+                $("#mask").css('display','block');
+            });
+            $("#mask").click(function(){
+                $("#mask").css('display','none');
+            });
+        }
+        function addBind() {
+            document.addEventListener('touchstart', touchSatrtFunc, false);  
+        }
+        function clearBind() {
+            document.removeEventListener('touchstart', touchSatrtFunc, false);
+            document.removeEventListener('touchend', touchEndFunc, false);
+        }
+        
+        function orientationChange() {
+            switch(window.orientation) {
+        　　case 0: 
+                addBind();
+                $("body").css('transform','');
+                break;
+        　　case -90: 
+                clearBind();
+                alert("游戏要竖屏玩哟！！！");
+                $("body").css('transform','rotate(90deg)');
+                break;
+        　　case 90:   
+                clearBind();
+                alert("游戏要竖屏玩哟！！！");
+                $("body").css('transform','rotate(-90deg)');
+                break;
+        　　case 180:   
+                addBind();
+                $("body").css('transform','rotate(0deg)');
+            　　break;
+            }
+        }
+        
+        $(document).ready(function(){
+            init();
+            orientationChange();
+            window.onorientationchange = orientationChange;
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+* {
+	margin: 0px; padding: 0px; -ms-user-select: none; -webkit-touch-callout: none; -webkit-text-size-adjust: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); -webkit-user-select: none; -moz-user-select: none;
+}
+body {
+	background: rgb(128, 183, 180); transition:1s; height: 1000px; overflow: hidden; font-family: "Helvetica Neue", "Hiragino Sans GB", "Microsoft YaHei", "????", Arial, sans-serif;
+}
+.shouji {
+	left: 0%; top: 0%; width: 310%; height: 100%; position: absolute;
+}
+.shouji .img {
+	width: 100%; height: 100%;
+}
+#main {
+	left: 0px; top: 60%; width: 100%; height: 40%; overflow: visible; position: fixed;
+}
+.point {
+	border-radius: 10px; top: 15%; width: 100%; height: 40px; text-align: center; color: rgb(255, 255, 255); line-height: 40px; font-size: 24px; font-weight: bold; position: absolute; background-color: rgba(0, 0, 0, 0.3);
+}
+.tips {
+	top: 25%; width: 100%; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: bold; position: absolute;
+}
+#main .wall {
+	top: 30%; width: 20%; height: 70%; position: absolute; background-color: rgb(0, 0, 0);
+}
+#main .stick {
+	left: 20%; width: 0px; height: 2%; bottom: 68%; position: absolute; transform: rotate(-90deg); background-color: rgb(0, 0, 0);
+}
+.stickMan {
+	left: 15.5%; width: 100%; bottom: 66.5%; position: absolute;
+}
+.stickMan img {
+	transform: scale(1);
+}
+.gameOver {
+	left: 0px; top: 0px; width: 100%; height: 100%; text-align: center; display: none; position: fixed; background-color: rgba(0, 0, 0, 0.3);
+}
+.gameOver h2 {
+	margin: 15% 0px 5%; color: rgb(255, 255, 255); font-size: 50px; font-weight: normal;
+}
+.gameOver .showPoint {
+	margin: 0px auto; padding: 2%; border-radius: 10px; width: 70%; color: rgb(0, 0, 0); font-weight: bold; background-color: rgb(255, 255, 255);
+}
+.gameOver .showPoint .newPoint {
+	font-size: 30px;
+}
+.bestPoint {
+	font-size: 30px;
+}
+.gameOver .btn {
+	float: left;margin: 2%; padding: 3% 0px; border-radius: 5px; width: 40%; color: rgb(255, 255, 255); font-weight: bold; background-color: orange;
+}
+.gameOver .btn a{
+	color: rgb(255, 255, 255);
+}
+#mask {
+	left: 0px; top: 0px; width: 100%; height: 100%; display: none; position: fixed; z-index: 999; background-color: rgba(0, 0, 0, 0.5);
+}
+#mask img {
+	top: 0px; right: 20px; position: absolute; width:100%;
+}
